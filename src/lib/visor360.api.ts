@@ -128,9 +128,72 @@ export async function apiCreateHotspot(data: any) {
 
     return r.json();
   }
-  export async function apiUpload360Image(file: File) {
+  async function compress360Image(file: File): Promise<File> {
+  return new Promise((resolve) => {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+
+    img.onload = () => {
+      const maxWidth = 3000;
+      const maxHeight = 1500;
+
+      let width = img.width;
+      let height = img.height;
+
+      const scale = Math.min(maxWidth / width, maxHeight / height, 1);
+
+      width = Math.round(width * scale);
+      height = Math.round(height * scale);
+
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+
+      const ctx = canvas.getContext('2d');
+
+      if (!ctx) {
+        URL.revokeObjectURL(url);
+        resolve(file);
+        return;
+      }
+
+      ctx.drawImage(img, 0, 0, width, height);
+
+      canvas.toBlob(
+        (blob) => {
+          URL.revokeObjectURL(url);
+
+          if (!blob) {
+            resolve(file);
+            return;
+          }
+
+          const newName = file.name.replace(/\.(png|jpg|jpeg)$/i, '.jpg');
+
+          resolve(
+            new File([blob], newName, {
+              type: 'image/jpeg',
+            })
+          );
+        },
+        'image/jpeg',
+        0.82
+      );
+    };
+
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      resolve(file);
+    };
+
+    img.src = url;
+  });
+}
+export async function apiUpload360Image(file: File) {
+  const compressedFile = await compress360Image(file);
+
   const formData = new FormData();
-  formData.append('file', file);
+  formData.append('file', compressedFile);
 
   const r = await fetchWithAuth(`${BACKEND}/upload`, {
     method: 'POST',

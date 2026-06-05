@@ -45,9 +45,9 @@ export default function MarzipanoCanvas({
         if (destroyed || !container) return;
 
         const pixelRatio =
-          typeof window !== 'undefined'
-            ? Math.min(window.devicePixelRatio || 1, 1.5)
-            : 1;
+  typeof window !== 'undefined'
+    ? Math.min(window.devicePixelRatio || 1, 1)
+    : 1;
 
         viewer = new Marzipano.Viewer(container, {
           controls: {
@@ -58,9 +58,13 @@ export default function MarzipanoCanvas({
           },
         });
 
-        const source = Marzipano.ImageUrlSource.fromString(pano.fileUrl);
+const imageUrl = pano.fileUrl.startsWith('http')
+  ? pano.fileUrl
+  : `${process.env.NEXT_PUBLIC_BACKEND_URL ?? 'http://localhost:5000'}${pano.fileUrl}`;
 
-        const geometry = new Marzipano.EquirectGeometry([{ width: 3000 }]);
+const source = Marzipano.ImageUrlSource.fromString(imageUrl);
+
+const geometry = new Marzipano.EquirectGeometry([{ width: 3000 }]);
 
         const limiter = Marzipano.RectilinearView.limit.traditional(
           1500,
