@@ -102,7 +102,7 @@ export default function VisorPorRuta() {
 
         const pixelRatio =
   typeof window !== 'undefined'
-    ? Math.min(window.devicePixelRatio || 1, 1)
+    ? Math.min(window.devicePixelRatio || 1, 1.2)
     : 1;
 
         viewer = new Marzipano.Viewer(container, {
@@ -111,12 +111,17 @@ export default function VisorPorRuta() {
         });
 
         rutaActual.panoramas.forEach((pano) => {
-          const source = Marzipano.ImageUrlSource.fromString(pano.fileUrl);
-          const isMobile =
-  typeof window !== 'undefined' && window.innerWidth <= 640;
+          const imageUrl = pano.fileUrl.startsWith('http')
+  ? pano.fileUrl
+  : `${BACKEND}${pano.fileUrl}`;
+
+const source = Marzipano.ImageUrlSource.fromString(imageUrl);
+const isMobile =
+  typeof window !== 'undefined' &&
+  /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
 const geometry = new Marzipano.EquirectGeometry([
-  { width: isMobile ? 2048 : 4096 },
+  { width: isMobile ? 2048 : 3000 },
 ]);
           const limiter = Marzipano.RectilinearView.limit.traditional(
             1500,
