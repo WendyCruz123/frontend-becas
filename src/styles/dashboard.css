@@ -1,0 +1,57 @@
+/* === Layout general en dos columnas === */
+.dashboard-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  min-height: 100vh; /* 🔹 cambia height → min-height */
+  padding: 2rem;
+  gap: 2rem;
+  overflow-y: auto; /* 🔹 scroll vertical */
+  scrollbar-width: none; /* 🔹 oculta scrollbar (Firefox) */
+  scroll-behavior: smooth; /* 🔹 desplazamiento suave */
+}
+
+/* 🔹 Oculta scroll en navegadores WebKit (Chrome, Edge, Safari) */
+.dashboard-container::-webkit-scrollbar {
+  display: none;
+}
+
+
+/* --- Columna izquierda --- */
+.dashboard-left {
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  max-width: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center; /* centra la tarjeta */
+}
+
+.botonera {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 640px) {
+  .mini-carousel {
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .mini-carousel-img {
+    width: 120px;
+    height: auto;
+  }
+}
+@media (max-width: 768px) {
+  .dashboard-left {
+    max-width: 100%;
+    width: 100%;
+    align-items: center;
+    text-align: center;
+  }
+}

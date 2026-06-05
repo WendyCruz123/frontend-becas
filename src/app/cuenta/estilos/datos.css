@@ -1,0 +1,95 @@
+/* =====================================================
+   👤 MODAL DATOS PERSONALES
+   Glassmorphism + Neomorphism
+===================================================== */
+
+.modal-datos {
+  width: 100%;
+  max-width: 100%;
+  padding: 28px 30px;
+
+   background: #70a2ff96;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+
+  box-shadow:
+    14px 14px 28px rgba(0, 0, 0, 0.18),
+    -10px -10px 24px rgba(255, 255, 255, 0);
+
+  color: #1f2937;
+}
+.modal-datos h3 {
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #1f2937;
+}
+
+
+/* ===== CONTENEDOR SUPERIOR (avatar + nombre) ===== */
+.perfil-top {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  margin-bottom: 22px;
+}
+
+/* ===== AVATAR EN TARJETA CUADRADA ===== */
+.avatar {
+  width: 150px;
+  height: 180px;
+  border-radius: 18px;
+
+  background: linear-gradient(
+    145deg,
+    #91c3c9,
+    #d7eef1
+  );
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow:
+    8px 8px 16px rgba(0, 0, 0, 0.15),
+    -2px -2px 5px rgba(86, 109, 132, 0.477),
+    inset 2px 2px 4px rgba(0, 0, 0, 0.08),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.8);
+}
+
+/* ===== LISTA DATOS ===== */
+.lista-datos {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.lista-datos li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 10px 12px;
+  margin-bottom: 10px;
+
+  background: rgba(255, 255, 255, 0.45);
+  border-radius: 14px;
+
+  box-shadow:
+    inset 2px 2px 4px rgba(0, 0, 0, 0.12),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.9);
+
+  font-size: 15px;
+}
+
+/* Iconos */
+.icono {
+  font-size: 18px;
+  width: 22px;
+  text-align: center;
+}
+
+
