@@ -111,10 +111,7 @@ export default function VisorPorRuta() {
         });
 
         rutaActual.panoramas.forEach((pano) => {
-          const source = Marzipano.ImageUrlSource.fromString(pano.fileUrl, {
-  crossOrigin: 'anonymous',
-});
-
+          const source = Marzipano.ImageUrlSource.fromString(pano.fileUrl);
           const isMobile =
   typeof window !== 'undefined' && window.innerWidth <= 640;
 
@@ -368,11 +365,9 @@ const geometry = new Marzipano.EquirectGeometry([
 
         setReady(true);
 
-        setTimeout(() => {
-          if (!destroyed && viewer?.updateSize) {
-            viewer.updateSize();
-          }
-        }, 300);
+        setTimeout(() => viewer?.updateSize?.(), 300);
+setTimeout(() => viewer?.updateSize?.(), 800);
+setTimeout(() => viewer?.updateSize?.(), 1500);
       } catch (e) {
         console.error(e);
         setError('No se pudo iniciar el visor 360');
