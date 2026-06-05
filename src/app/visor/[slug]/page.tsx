@@ -111,10 +111,11 @@ export default function VisorPorRuta() {
         });
 
         rutaActual.panoramas.forEach((pano) => {
-          const source = Marzipano.ImageUrlSource.fromString(pano.fileUrl);
+          const source = Marzipano.ImageUrlSource.fromString(pano.fileUrl, {
+  crossOrigin: 'anonymous',
+});
 
-          const geometry = new Marzipano.EquirectGeometry([{ width: 3000 }]);
-
+          const geometry = new Marzipano.EquirectGeometry([{ width: 4096 }]);
           const limiter = Marzipano.RectilinearView.limit.traditional(
             1500,
             (100 * Math.PI) / 180
