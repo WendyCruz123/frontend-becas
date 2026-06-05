@@ -101,9 +101,9 @@ export default function VisorPorRuta() {
         if (destroyed) return;
 
         const pixelRatio =
-          typeof window !== 'undefined'
-            ? Math.min(window.devicePixelRatio || 1, 1.5)
-            : 1;
+  typeof window !== 'undefined'
+    ? Math.min(window.devicePixelRatio || 1, 1)
+    : 1;
 
         viewer = new Marzipano.Viewer(container, {
           controls: { mouseViewMode: 'drag' },
@@ -115,7 +115,12 @@ export default function VisorPorRuta() {
   crossOrigin: 'anonymous',
 });
 
-          const geometry = new Marzipano.EquirectGeometry([{ width: 4096 }]);
+          const isMobile =
+  typeof window !== 'undefined' && window.innerWidth <= 640;
+
+const geometry = new Marzipano.EquirectGeometry([
+  { width: isMobile ? 2048 : 4096 },
+]);
           const limiter = Marzipano.RectilinearView.limit.traditional(
             1500,
             (100 * Math.PI) / 180

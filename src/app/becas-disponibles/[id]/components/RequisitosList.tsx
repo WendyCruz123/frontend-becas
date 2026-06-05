@@ -165,7 +165,7 @@ const todosCompletados = total > 0 && completados === total;
                   <button
                     className="req-btn"
                     onClick={() =>
-                      window.open(`/visor/${oficina.panorama_route_slug}`, '_blank')
+                      window.location.href = `/visor/${oficina.panorama_route_slug}`
                     }
                   >
                     Ir a Oficina
@@ -176,7 +176,7 @@ const todosCompletados = total > 0 && completados === total;
                     className="req-btn"
                     type="button"
                     onClick={() =>
-                      window.open(`/visor/${oficinaEtapa.panorama_route_slug}`, '_blank')
+                      window.location.href = `/visor/${oficinaEtapa.panorama_route_slug}`
                     }
                   >
                     Ir a Oficina
