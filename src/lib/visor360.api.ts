@@ -85,7 +85,22 @@ export async function apiDeletePanorama(id: string) {
 
   return r.json();
 }
+export async function apiUpdatePanoramaImage(id: string, fileUrl: string) {
+  const res = await fetch(`${BACKEND}/panoramas/${id}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    },
+    body: JSON.stringify({ fileUrl }),
+  });
 
+  if (!res.ok) {
+    throw new Error('No se pudo actualizar la imagen del panorama');
+  }
+
+  return res.json();
+}
 export async function apiCreateHotspot(data: any) {
   const r = await fetchWithAuth(`${BACKEND}/hotspots`, {
     method: 'POST',

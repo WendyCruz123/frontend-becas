@@ -2,7 +2,7 @@
 
 import { useRef, useState } from 'react';
 import type { Panorama360 } from '../types';
-import { apiUpload360Image } from '@/lib/visor360.api';
+import { apiUpload360Image, apiUpdatePanoramaImage } from '@/lib/visor360.api';
 
 type Props = {
   panoramas: Panorama360[];
@@ -56,7 +56,24 @@ export default function PanoramasStrip({
       }
     }
   }
+async function replacePanoramaImage(pano: Panorama360, file: File | null) {
+  if (!file) return;
 
+  try {
+    setUploading(true);
+
+    const uploadedUrl = await apiUpload360Image(file);
+
+    await apiUpdatePanoramaImage(pano.id, uploadedUrl);
+
+    alert('Imagen reemplazada correctamente. Recarga la página.');
+    window.location.reload();
+  } catch {
+    alert('No se pudo reemplazar la imagen.');
+  } finally {
+    setUploading(false);
+  }
+}
   return (
     <section className="mt-5 min-w-0">
       <div className="mb-3 flex items-center justify-between">
@@ -131,6 +148,25 @@ export default function PanoramasStrip({
                 >
                   🗑
                 </button>
+                <input
+  id={`replace-${pano.id}`}
+  type="file"
+  accept="image/jpeg,image/png"
+  className="hidden"
+  onChange={(e) =>
+    replacePanoramaImage(pano, e.target.files?.[0] ?? null)
+  }
+/>
+
+<button
+  type="button"
+  onClick={() =>
+    document.getElementById(`replace-${pano.id}`)?.click()
+  }
+  className="absolute left-2 top-2 rounded-full bg-white/90 px-2 py-1 text-xs font-black text-blue-600 opacity-0 shadow transition hover:bg-blue-600 hover:text-white group-hover:opacity-100"
+>
+  🔁
+</button>
               </div>
             );
           })}
